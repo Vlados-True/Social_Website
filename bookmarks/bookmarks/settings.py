@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'django_extensions',
 
 ]
 
@@ -130,6 +131,9 @@ root1
 root1@gmail.com
 dkflrhjcc123
 
+python manage.py runserver_plus --cert-file cert.crt
+
+
 '''
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -140,4 +144,26 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+]
+
+SOCIAL_AUTH_FACEBOOK_KEY = '250093771119576'  # ИД приложения Facebook
+SOCIAL_AUTH_FACEBOOK_SECRET = '0560e0d59d38fa68c953c0be78ab15ec'  # Секрет приложения Facebook
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '47387468169-psg5q08ne5kno3v0f2ocv686cun427bs.apps.googleusercontent.com'  # ИД клиента Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  # Секрет клиента Google
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
 ]
